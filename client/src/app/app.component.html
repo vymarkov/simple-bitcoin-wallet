@@ -1,0 +1,41 @@
+<div class="container">
+
+  <div class="title-container">
+    <h1 class="text-muted text-center">bitcoin-wallet</h1>
+  </div>
+
+  <div class="justify-content-center">
+    <div class="mx-auto card">
+      <div class="row mt-4"></div>
+      <div class="row ml-2 mr-2">
+        <div class="col-sm-12 col-lg-6">
+          <label for="">Origin Bitcoin address</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="1DuFRRFEJvchWpTQiDqMk3DW3mP9XZ3UTa" aria-describedby="basic-addon2">
+          </div>
+        </div>
+        <br>
+        <div class="col-sm-12 col-lg-6">
+          <label for="">Origin private key</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="1DuFRRFEJvchWpTQiDqMk3DW3mP9XZ3UTa" aria-describedby="basic-addon2">
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+          <label for="">Amount</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">mBTC</span>
+            </div>
+            <input #mbits type="text" class="form-control" placeholder="500" (blur)="sendAmount(mbits.value)" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="sendAmount(mbits.value)" type="button">Send</button>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+      <div class="row mb-4"></div>
+    </div>
+  </div>
+</div>
