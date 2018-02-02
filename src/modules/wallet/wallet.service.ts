@@ -1,12 +1,11 @@
 import { promisify } from 'util';
 import { Component, HttpStatus } from '@nestjs/common';
 import { HttpException } from '@nestjs/core';
-import { IsDefined, IsNumberString, IsNotEmpty } from 'class-validator';
-import * as assert from 'assert-plus';
 
 import * as bitcoin from 'bitcoinjs-lib';
 import * as bitcore from 'bitcore-explorers/node_modules/bitcore-lib';
 import * as explorers from 'bitcore-explorers';
+import { CreateTransactionDto } from './dto/transaction.dto';
 
 export type WalletAddress = string;
 
@@ -18,39 +17,6 @@ export class UnspentTransactionOutput {
   scriptPubKey: string;
   txid: string;
   vout: number;
-}
-
-export class CreateTransactionDto {
-  @IsNumberString()
-  @IsNotEmpty()
-  @IsDefined()
-  public amount: string;
-
-  @IsNotEmpty()
-  @IsDefined()
-  public address: string;
-
-  @IsNotEmpty()
-  @IsDefined()
-  public private_key: string;
-
-  constructor(data: CreateTransactionDto) {
-    assert.object(data, 'data');
-    assert.string(data.address, 'address');
-    assert.string(data.private_key, 'private_key');
-    assert.string(data.amount, 'amount');
-
-    const satoshis = bitcore.Unit.fromMilis(data.amount).toSatoshis();
-    if (isNaN(satoshis)) {
-      throw new HttpException('Amount should be a number', HttpStatus.BAD_REQUEST);
-    }
-    if (satoshis <= 0) {
-      throw new HttpException('Amount should be not negative', HttpStatus.BAD_REQUEST);
-    }
-    this.address = data.address;
-    this.private_key = data.private_key;
-    this.amount = data.amount;
-  }
 }
 
 export class TransactionDto {
@@ -125,6 +91,7 @@ export class WalletService {
 
     const err = transaction.getSerializationError();
     if (err) {
+      // FIXME: create error constructors for business logic errors
       throw new HttpException(err.messsage, HttpStatus.BAD_REQUEST);
     }
     return this.broadcast(transaction);
@@ -135,6 +102,7 @@ export class WalletService {
   }
 
   private async broadcast(trx) {
+    // TODO: handle any errors and wrap into user friendly errors
     const tid = await this.insight.broadcast(trx);
     return tid;
   }

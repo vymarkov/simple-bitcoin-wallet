@@ -11,14 +11,16 @@
         <div class="col-sm-12 col-lg-6">
           <label for="">Origin Bitcoin address</label>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="1DuFRRFEJvchWpTQiDqMk3DW3mP9XZ3UTa" aria-describedby="basic-addon2">
+            <input #originAddress type="text" class="form-control" placeholder="1DuFRRFEJvchWpTQiDqMk3DW3mP9XZ3UTa" value="{{address}}"
+              aria-describedby="basic-addon2">
           </div>
         </div>
         <br>
         <div class="col-sm-12 col-lg-6">
           <label for="">Origin private key</label>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="1DuFRRFEJvchWpTQiDqMk3DW3mP9XZ3UTa" aria-describedby="basic-addon2">
+            <input #privatekey type="text" class="form-control" placeholder="1DuFRRFEJvchWpTQiDqMk3DW3mP9XZ3UTa" value="{{privateKey}}"
+              aria-describedby="basic-addon2">
           </div>
         </div>
         <div class="col-sm-12 col-lg-6">
@@ -27,9 +29,10 @@
             <div class="input-group-prepend">
               <span class="input-group-text">mBTC</span>
             </div>
-            <input #mbits type="text" class="form-control" placeholder="500" (blur)="sendAmount(mbits.value)" aria-describedby="basic-addon2">
+            <input #mbits type="text" class="form-control" placeholder="500" (blur)="sendAmount(privatekey.value, originAddress.value, mbits.value)"
+              aria-describedby="basic-addon2" value="10">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" (click)="sendAmount(mbits.value)" type="button">Send</button>
+              <button class="btn btn-outline-secondary" (click)="sendAmount(privatekey.value, originAddress.value, mbits.value)" type="button">Send</button>
             </div>
           </div>
         </div>

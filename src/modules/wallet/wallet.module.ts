@@ -4,10 +4,10 @@ import { WalletService } from './wallet.service';
 
 @Module({
   controllers: [
-    WalletController
+    WalletController,
   ],
   components: [
-    WalletService
-  ]
+    WalletService,
+  ],
 })
-export class WalletModule {}
+export class WalletModule { }
